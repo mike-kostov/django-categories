@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+
+{% block title %} Categories - List all
+{% endblock %}
+
+{% block content %}
+<h1>Category form!</h1>
+
+<form method="post" action="{{ formUrl }}">
+    {% csrf_token %}
+    {{ form }}
+    <!--<input type="text" name="name" placeholder="Category name" />
+    <input
+        type="text"
+        name="description"
+        placeholder="Category description"
+    />
+    <input type="text" name="parent" placeholder="Parent category" />-->
+    <br/>
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

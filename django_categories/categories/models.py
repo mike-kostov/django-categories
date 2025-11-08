@@ -1,0 +1,8 @@
+from django.db import models
+
+# Create your models here.
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=False)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
+    depth = models.PositiveIntegerField(default=0)
