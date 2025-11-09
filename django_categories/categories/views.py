@@ -10,17 +10,17 @@ from .forms import CategoryForm
 # Create your views here.
 def index(request):
     template = loader.get_template('categories.html')
-    categories = Category.objects.all()
+    categories = Category.objects.all().prefetch_related('children')
     return HttpResponse(template.render({'categories': categories}))
 
 def indexByDepth(request, depth=0):
     template = loader.get_template('categories.html')
-    categories = Category.objects.filter(depth=depth)
+    categories = Category.objects.filter(depth=depth).prefetch_related('children')
     return HttpResponse(template.render({'categories': categories, 'depth': depth}))
 
 def indexByParent(request, parent_id=0):
     template = loader.get_template('categories.html')
-    categories = Category.objects.filter(parent_id=parent_id)
+    categories = Category.objects.filter(parent_id=parent_id).prefetch_related('children')
     return HttpResponse(template.render({'categories': categories, 'parent_id': parent_id}))
 
 def show(request, category_id):
