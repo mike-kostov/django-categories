@@ -9,9 +9,14 @@ from .forms import CategoryForm
 
 # Create your views here.
 def index(request):
-    template = loader.get_template('helloworld.html')
+    template = loader.get_template('categories.html')
     categories = Category.objects.all()
     return HttpResponse(template.render({'categories': categories}))
+
+def indexByDepth(request, depth=0):
+    template = loader.get_template('categories.html')
+    categories = Category.objects.filter(depth=depth)
+    return HttpResponse(template.render({'categories': categories, 'depth': depth}))
 
 def show(request, category_id):
     return HttpResponse(f'Here I imagine this category id {category_id}')

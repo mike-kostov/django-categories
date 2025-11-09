@@ -1,0 +1,27 @@
+{% extends "master.html" %}
+
+{% block title %} Categories - List all
+{% endblock %}
+
+{% block content %}
+<h1>Categories {% if categories %}({{ categories|length }}){% endif %}</h1>
+{% if depth >= 0 %}
+    <p>Depth: {{ depth }}</p>
+    {% if depth > 0 %}
+        {% with prevDepth=depth|add:-1 %}
+        <a href="{% url 'categories.indexByDepth' prevDepth %}">Depth - 1</a>
+        {% endwith %}
+    {% endif %}
+    {% with nextDepth=depth|add:1 %}
+        <a href="{% url 'categories.indexByDepth' nextDepth %}">Depth + 1</a>
+    {% endwith %}
+{% endif %}
+
+<ul>
+    {% for category in categories %}
+    <li>
+        <a href="{% url 'categories.edit' category.id %}">{{ category.name }} Depth:{{ category.depth }} Children:{{ category.children.count }} </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
