@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 urlpatterns = [
     path('', include('categories.urls')),
@@ -26,6 +26,6 @@ urlpatterns = [
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        path(r'^__debug__/', include(debug_toolbar.urls)),
+        re_path(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
     SHOW_TOOLBAR_CALLBACK = True

@@ -18,6 +18,11 @@ def indexByDepth(request, depth=0):
     categories = Category.objects.filter(depth=depth)
     return HttpResponse(template.render({'categories': categories, 'depth': depth}))
 
+def indexByParent(request, parent_id=0):
+    template = loader.get_template('categories.html')
+    categories = Category.objects.filter(parent_id=parent_id)
+    return HttpResponse(template.render({'categories': categories, 'parent_id': parent_id}))
+
 def show(request, category_id):
     return HttpResponse(f'Here I imagine this category id {category_id}')
 
@@ -35,12 +40,6 @@ def create(request):
 def store(request):
     form = CategoryForm(request.POST)
     form.is_valid()
-    parent = form.cleaned_data['parent']
-    depth = 0
-    while parent:
-        parent = parent.parent
-        depth += 1
-    form.instance.depth = depth
     new_category = form.save()
     return HttpResponse(new_category.name + ' ' + str(new_category.depth))
 
@@ -61,12 +60,6 @@ def update(request, category_id):
     category = Category.objects.get(id=category_id)
     form = CategoryForm(request.POST, instance=category)
     if form.is_valid():
-        depth = 0
-        parent = form.cleaned_data['parent']
-        while parent:
-            parent = parent.parent
-            depth += 1
-        form.instance.depth = depth
         form.save()
         return HttpResponse(f'Category updated successfully {category.id} {category.name}')
     return HttpResponse('Category update failed')

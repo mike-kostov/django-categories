@@ -36,16 +36,12 @@ class Command(BaseCommand):
 
         for i in range(1, 2001):
             parent = None
-            depth = 0
             if i > 100:
                 parent = random.choice(all_categories[:i])
-
-            if parent is not None:
-                depth = parent.depth + 1
 
             all_categories.append(Category.objects.create(
                 name=f'Seeded Category {i}',
                 description=f'Description for Seeded Category {i}',
-                parent=parent,
-                depth=depth
+                image=f'/image/path/to/category/{i}.png',
+                parent=parent
             ))

@@ -21,6 +21,10 @@
     {% for category in categories %}
     <li>
         <a href="{% url 'categories.edit' category.id %}">{{ category.name }} Depth:{{ category.depth }} Children:{{ category.children.count }} </a>
+        {% if category.children.count > 0 %}
+            <br/>
+            <a href="{% url 'categories.indexByParent' category.id %}">See children</a>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
