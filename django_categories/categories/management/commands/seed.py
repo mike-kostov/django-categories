@@ -25,6 +25,7 @@ class Command(BaseCommand):
     def refresh_categories(self):
         self.clear_categories()
         self.create_categories()
+        # self.create_similarities()
 
     def clear_categories(self):
         Category.objects.all().delete()
@@ -43,5 +44,19 @@ class Command(BaseCommand):
                 name=f'Seeded Category {i}',
                 description=f'Description for Seeded Category {i}',
                 image=f'/image/path/to/category/{i}.png',
-                parent=parent
+                parent=parent,
             ))
+
+        self.stdout.write('Creating similarities...')
+        self.stdout.write(f'Found {len(all_categories)} categories')
+        for i in range(1, 200001):
+            category1 = random.choice(all_categories)
+            category2 = random.choice(all_categories)
+
+            if category1 == category2:
+                category2 = random.choice(all_categories)
+
+            category1.mark_similar_to(category2)
+
+    def create_similarities(self):
+        all_categories = Category.objects.all()
