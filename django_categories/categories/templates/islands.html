@@ -1,0 +1,16 @@
+{% extends "master.html" %}
+
+{% block title %} Categories - Islands
+{% endblock %}
+
+{% block content %}
+    <h1>Islands</h1>
+    <p>Total islands: {{ total_islands }}</p>
+
+    {% for island in islands %}
+        <div class="island">
+            <h2>{{ island.size }}</h2>
+            <p>{{ island.categories }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
